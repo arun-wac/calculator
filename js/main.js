@@ -408,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 return false;
             }
             temp = temp.replace("*", "x");
-            document.getElementById("expression").innerHTML = t + temp;
+            document.getElementById("expression").innerHTML = t + "=" + result;
             history.push(t + "=" + inp.value);
         }
         ANS = parseInt(inp.value);
