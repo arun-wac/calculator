@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Calculator</title>
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="calc-wrapper">
+                <div class="jumbotron">
+                    <div class="row mx-0">
+                        <div class="col p-rel p-0">
+                            <div class="row p-ab m-0">
+                                <a href="#1" id="history" class="history-button">
+                                    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path
+                                            d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <p id="expression"></p>
+                                <div id="history-modal" class="hidden history-modal">
+                                </div>
+
+
+                            </div>
+                            <input type="text" class="form-control text-right" name="" id="calc-input" placeholder="0" value="" autocomplete="off" />
+
+
+                        </div>
+
+                    </div>
+                    <div class="calc-body">
+                        <div class="row">
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="ANS" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">ANS</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="backspace" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-no">
+                                    <i class="material-icons">backspace</i>
+                                </button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="CE" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-no">CE</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="AC" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-no">AC</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="(" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-op">(</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id=")" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-op">)</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="%" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-op">%</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="/" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-op">/</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="7" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">7</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="8" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">8</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="9" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">9</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="x" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">x</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="4" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">4</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="5" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">5</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="6" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">6</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="-" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">-</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="1" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">1</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="2" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">2</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="3" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">3</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="+" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-op">+</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="-ve" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-no">-ve</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="0" class="btn  btn-lg btn-block btn-light calc-btn calc-btn-op">0</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="." class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-no">.</button>
+                            </div>
+                            <div class="col-3 p-1">
+                                <button type="button" name="" id="=" class="btn  btn-lg btn-block btn-light  calc-btn calc-btn-no">=</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
