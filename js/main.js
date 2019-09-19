@@ -52,10 +52,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     function getAllIndexes(arr, val) {
         var indexes = [],
-            i;
-        for (i = 0; i < arr.length; i++)
-            if (arr[i] === val)
-                indexes.push(i);
+            i = -1;
+        while ((i = arr.indexOf(val, i + 1)) != -1) {
+            indexes.push(i);
+        }
         return indexes;
     }
 
@@ -360,12 +360,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
 
 
-            var ans_index = -1;
-            if ((ans_index = temp.indexOf("ANS")) != -1) {
-                if (typeof temp[ans_index - 1] != "undefined" && temp[ans_index - 1].match(operators) == null || temp[ans_index - 1] == '%') {
-                    temp = temp.slice(0, ans_index) + "x" + temp.slice(ans_index);
-
+            var ans_indices = getAllIndexes(temp, "ANS");
+            var k = 0;
+            for (k = 0; k < ans_indices.length; k++) {
+                if (typeof temp[ans_indices[k] - 1] != "undefined" && temp[ans_indices[k] - 1].match(operators) == null || temp[ans_indices[k] - 1] == '%') {
+                    temp = temp.slice(0, ans_indices[k]) + "*" + temp.slice(ans_indices[k]);
+                    ans_indices = getAllIndexes(temp, "ANS");
                 }
+
+                if (typeof temp[ans_indices[k] + 3] != "undefined" && temp[ans_indices[k] + 3].match(operators) == null) {
+                    temp = temp.slice(0, ans_indices[k] + 3) + "*" + temp.slice(ans_indices[k] + 3);
+                    ans_indices = getAllIndexes(temp, "ANS");
+                }
+
             }
 
             temp = temp.replace("x", "*");
@@ -390,6 +397,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     }
                 }
             }
+
+
 
             try {
                 var result = eval(temp);
