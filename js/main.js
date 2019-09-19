@@ -345,6 +345,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 e.preventDefault();
                 return false;
             }
+
+
+
+
+
+
             var j = 0;
             var open_index = getAllIndexes(temp, "(");
             for (j of open_index) {
@@ -360,20 +366,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
 
 
-            var ans_indices = getAllIndexes(temp, "ANS");
-            var k = 0;
-            for (k = 0; k < ans_indices.length; k++) {
-                if (typeof temp[ans_indices[k] - 1] != "undefined" && temp[ans_indices[k] - 1].match(operators) == null || temp[ans_indices[k] - 1] == '%') {
-                    temp = temp.slice(0, ans_indices[k]) + "*" + temp.slice(ans_indices[k]);
-                    ans_indices = getAllIndexes(temp, "ANS");
-                }
 
-                if (typeof temp[ans_indices[k] + 3] != "undefined" && temp[ans_indices[k] + 3].match(operators) == null) {
-                    temp = temp.slice(0, ans_indices[k] + 3) + "*" + temp.slice(ans_indices[k] + 3);
-                    ans_indices = getAllIndexes(temp, "ANS");
-                }
-
-            }
 
             temp = temp.replace("x", "*");
             var percentage_index = -1,
@@ -398,6 +391,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
             }
 
+            var ans_indices = getAllIndexes(temp, "ANS");
+            var k = 0;
+            for (k = 0; k < ans_indices.length; k++) {
+                if (typeof temp[ans_indices[k] - 1] != "undefined" && temp[ans_indices[k] - 1].match(operators) == null || temp[ans_indices[k] - 1] == '%') {
+                    temp = temp.slice(0, ans_indices[k]) + "*" + temp.slice(ans_indices[k]);
+                    ans_indices = getAllIndexes(temp, "ANS");
+                }
+
+                if (typeof temp[ans_indices[k] + 3] != "undefined" && temp[ans_indices[k] + 3].match(operators) == null) {
+                    temp = temp.slice(0, ans_indices[k] + 3) + "*" + temp.slice(ans_indices[k] + 3);
+                    ans_indices = getAllIndexes(temp, "ANS");
+                }
+
+            }
 
 
             try {
