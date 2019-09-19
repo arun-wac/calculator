@@ -368,7 +368,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-            temp = temp.replace("x", "*");
+            temp = temp.replace(/[x]/g, "*");
             var percentage_index = -1,
                 i = temp.length - 1,
                 op = '';
