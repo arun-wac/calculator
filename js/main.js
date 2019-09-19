@@ -81,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
 
             if (this.innerHTML.match(ops) != null) {
-                console.log("op  ", dotcount);
                 dotcount[++dot_count_index] = 0;
             }
 
@@ -98,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var last_char = inp.value[inp.value.length - 1];
             inp.focus();
             if (this.innerHTML == '.') {
-                console.log("dot  ", dotcount);
                 if (dotcount[dot_count_index] == 1) {
                     return false;
                 }
@@ -152,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         inp.setSelectionRange(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
         var key = e.key;
         var last_index = inp.value.length;
-        // console.log(key);
         var last_char = inp.value[last_index - 1];
 
         if (typeof inp.value[last_index - 1] != "undefined") {
@@ -185,11 +182,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
         }
         if (key.match(ops) != null) {
-            console.log("op  ", dotcount);
             dotcount[++dot_count_index] = 0;
         }
         if (key == '.') {
-            console.log("dot  ", dotcount);
             if (dotcount[dot_count_index] == 1) {
                 e.preventDefault();
                 return false;
@@ -197,7 +192,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             dotcount[dot_count_index] = 1;
         }
 
-        console.log(key);
 
         if (typeof last_char != "undefined" && key == "Backspace") {
             if (last_char == '.') {
@@ -307,12 +301,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
         modal.classList.toggle("hidden");
         var history_elements = document.getElementsByClassName("history-elements");
-        // console.log(history_elements);
         for (elements of history_elements) {
             elements.addEventListener("click", function(e) {
 
                 var ele = this.innerHTML;
-                // console.log(ele);
                 var i = ele.indexOf("=");
                 inp.value = ele.slice(0, i);
                 inp.focus();
