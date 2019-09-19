@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             try {
                 var result = eval(temp);
             } catch (e) {
-                console.log(temp);
+                console.log("Result : ", temp);
                 console.log(e);
                 return false;
             }
