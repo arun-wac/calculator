@@ -139,7 +139,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     });
 
-    inp.addEventListener("input", function(e) {});
+    inp.addEventListener("input", function(e) {
+        var invalid_char = "!@#$^&_[]{}\\|;:\'\",<>?";
+        var inv_char;
+        for (inv_char of invalid_char) {
+            inp.value = inp.value.replace(inv_char, '');
+        }
+    });
 
 
     inp.addEventListener("keydown", function(e) {
@@ -410,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 return false;
             }
             temp = temp.replace("*", "x");
-            document.getElementById("expression").innerHTML = t;
+            document.getElementById("expression").innerHTML = t + temp;
             history.push(t + "=" + inp.value);
         }
         ANS = parseInt(inp.value);
