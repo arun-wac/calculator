@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
 
 
-            if (this.innerHTML == '%' && last_char == "%") {
+            if (this.innerHTML == '%' && (last_char == "%" || last_char == "(")) {
                 return false;
             }
 
@@ -207,6 +207,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
             dotcount[dot_count_index] = 1;
         }
 
+
+        if (key == '%' && (last_char == "%" || last_char == "(")) {
+            e.preventDefault();
+            return false;
+        }
 
         if (typeof last_char != "undefined" && key == "Backspace") {
             if (last_char == '.') {
