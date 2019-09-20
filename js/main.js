@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var ops3 = new RegExp("[\+x\%\/\=\-]", "g");
     var ops4 = new RegExp("[\+x\%\/\=\(\)\-]", "g");
     var operators = /[x\+\/\*\-]/gmi;
+    var operators1 = /[x\+\/\*\)\-]/gmi;
     var double_op = new RegExp("[x\+\/\*\.\-]{2}", "gmi");
     var duplicate = new RegExp("[x\+\/\.\*\-]", "gmi");
     var duplicate1 = new RegExp("[x\+\/\*\-]", "gmi");
@@ -78,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
             if (this.innerHTML == ")") {
                 if (inc_para_close() == -1 || last_char == "(" || last_char.match(symbols) != null) {
+                    if (last_char == '(') {
+                        close_para_count--;
+                    }
                     return false;
                 }
             }
@@ -378,26 +382,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 return false;
             }
 
-
-
-
-
-
             var j = 0;
             var open_index = getAllIndexes(temp, "(");
             for (j of open_index) {
-                if (typeof temp[j - 1] != "undefined" && temp[j - 1].match(num_or_dot) != null) {
+                if (typeof temp[j - 1] != "undefined" && (temp[j - 1].match(num_or_dot) != null || temp[j - 1] == ")")) {
                     temp = temp.slice(0, j) + "*" + temp.slice(j);
                 }
             }
             var close_index = getAllIndexes(temp, ")");
             for (j of close_index) {
-                if (typeof temp[j + 1] != "undefined" && temp[j + 1].match(num_or_dot) != null) {
+                if (typeof temp[j + 1] != "undefined" && temp[j + 1].match(num_or_dot) != null && temp[j + 1] != '%') {
                     temp = temp.slice(0, j + 1) + "*" + temp.slice(j + 1);
                 }
             }
-
-
 
 
             temp = temp.replace(/[x]/g, "*");
@@ -406,20 +403,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 op = '';
             while ((percentage_index = temp.indexOf("%")) != -1) {
                 for (i = percentage_index - 1;
-                    (typeof temp[i] == "undefined" || (op = temp[i].match(operators)) == null) && i > -1; i--);
+                    (typeof temp[i] == "undefined" || (op = temp[i].match(operators1)) == null) && i > -1; i--);
 
-                if (i == -1) { // The number with percentage is first number
+                if (i == -1 || op == ")") {
                     temp = temp.slice(0, percentage_index) + "/100" + temp.slice(percentage_index + 1);
 
-                } else {
+                } else if (op == '+' || op == '-') {
+                    temp = temp.slice(0, i) + "*(1" + op + "(" + temp.slice(i + 1, percentage_index) + "/100))" + temp.slice(percentage_index + 1);
 
-                    if (op == '+' || op == '-') {
-                        temp = temp.slice(0, i) + "*(1" + op + "(" + temp.slice(i + 1, percentage_index) + "/100))" + temp.slice(percentage_index + 1);
+                } else if (op == '/' || op == '*') {
+                    temp = temp.slice(0, i + 1) + "(" + temp.slice(i + 1, percentage_index) + "/100)" + temp.slice(percentage_index + 1);
 
-                    } else if (op == '/' || op == '*') {
-                        temp = temp.slice(0, i + 1) + "(" + temp.slice(i + 1, percentage_index) + "/100)" + temp.slice(percentage_index + 1);
+                }
+            }
 
-                    }
+            var open_index = getAllIndexes(temp, "(");
+            for (j of open_index) {
+                if (typeof temp[j - 1] != "undefined" && (temp[j - 1].match(num_or_dot) != null || temp[j - 1] == ")")) {
+                    temp = temp.slice(0, j) + "*" + temp.slice(j);
+                }
+            }
+            var close_index = getAllIndexes(temp, ")");
+            for (j of close_index) {
+                if (typeof temp[j + 1] != "undefined" && temp[j + 1].match(num_or_dot) != null && temp[j + 1] != '%') {
+                    temp = temp.slice(0, j + 1) + "*" + temp.slice(j + 1);
                 }
             }
 
