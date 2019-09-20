@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var inp = document.getElementById("calc-input");
     var buttons = document.getElementsByClassName("calc-btn-op");
-
+    var button;
     var buttons_count = buttons.length;
 
     var dotcount = [0];
@@ -316,17 +316,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
     document.getElementById("AC").addEventListener("click", function() {
-
+        history = [];
+        ANS = 0;
+        document.getElementById("expression").innerHTML = '';
         document.getElementById("CE").click();
     });
 
     document.getElementById("CE").addEventListener("click", function() {
-        // dotreset();
+        para_count_reset();
+        dotcount = [0];
+        dot_count_index = 0;
         inp.value = '';
     });
 
-    document.getElementById("-ve").addEventListener("click", function() {
-        inp.value *= -1;
+    document.getElementById("pi").addEventListener("click", function() {
+        // var i = inp.value.length - 1;
+        // for (; i >= 0; i--) {
+        //     if (inp.value[i] == 'A') {
+        //         inp.value = inp.value.slice(0, i) + "-" + inp.value.slice(i);
+        //         console.log(inp.value);
+        //     }
+        // }
+
+        inp.value += "π";
     });
 
     document.getElementById("=").addEventListener("click", function(e) {
@@ -405,6 +417,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
 
             }
+
+
+            var pi_indices = getAllIndexes(temp, "π");
+            k = 0;
+            for (k = 0; k < pi_indices.length; k++) {
+                if (typeof temp[pi_indices[k] - 1] != "undefined" && temp[pi_indices[k] - 1].match(operators) == null || temp[pi_indices[k] - 1] == '%') {
+                    temp = temp.slice(0, pi_indices[k]) + "*" + temp.slice(pi_indices[k]);
+                    pi_indices = getAllIndexes(temp, "π");
+                }
+
+                if (typeof temp[pi_indices[k] + 1] != "undefined" && temp[pi_indices[k] + 1].match(operators) == null) {
+                    temp = temp.slice(0, pi_indices[k] + 1) + "*" + temp.slice(pi_indices[k] + 1);
+                    pi_indices = getAllIndexes(temp, "π");
+                }
+
+            }
+            var π = 22 / 7;
 
 
             try {
