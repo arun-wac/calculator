@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var key_count = 0;
     var all_op = new RegExp("[0-9x\+\/\*\b\.\%()\-]", "g");
 
+    var mul_div_op = new RegExp("[x%\*\/]", "g");
     var num_or_dot = new RegExp("[0-9\.]", "g");
     var ops = new RegExp("[\+x\/\%\(\)\=\-]", "g");
     var ops1 = new RegExp("[\+x\/\%\)\=\-]", "g");
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     for (button of buttons) {
         button.addEventListener("click", function() {
+            var last_index = inp.value.length;
             var last_char = inp.value[inp.value.length - 1];
 
             if (this.innerHTML == 0 && last_char == '/') {
@@ -79,6 +81,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     return false;
                 }
             }
+
+            if (this.innerHTML == '/' || this.innerHTML == 'x' || this.innerHTML == '%') {
+                if (this.innerHTML && this.innerHTML.match(mul_div_op) != null &&
+                    typeof inp.value[last_index - 1] == "undefined") {
+                    return false;
+                }
+            }
+
+
+            if (this.innerHTML == '%' && last_char == "%") {
+                return false;
+            }
+
 
             if (this.innerHTML.match(ops) != null) {
                 dotcount[++dot_count_index] = 0;
@@ -256,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 return false;
             }
         }
-        var mul_div_op = new RegExp("[x%\*\/]", "g");
+
         if (inp.value[last_index - 1] && inp.value[last_index - 1].match(mul_div_op) != null &&
             typeof inp.value[last_index - 2] == "undefined") {
             inp.value = inp.value.slice(0, -1);
